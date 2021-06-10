@@ -60,7 +60,6 @@ def find_nose_tip_with_landmark(source):
 '''
 Functions for depth images to pc
 '''
-
 def create_pc_from_depth_img(img_path):
     depth_raw = o3d.io.read_image(img_path)
     pcd = o3d.create_point_cloud_from_depth_image(depth_raw, o3d.PinholeCameraIntrinsic(
@@ -72,7 +71,6 @@ def depth_to_metres(frame):
     image = o3d.io.read_image(frame)
     image = np.asarray(image)
     depth_m = 1.0 / (image * -0.0030711016 + 3.3309495161)
-
     return depth_m, image
 
 
@@ -91,24 +89,19 @@ def depth_in_metres_calibrator(D, kp, deb):
 
     scaled_vec_pc = o3d.geometry.PointCloud()
     scaled_vec_pc.points = o3d.utility.Vector3dVector(scaled_vec)
-    # o3d.io.write_point_cloud("3D point clouds/DiMC_C_TEST_scaled_vec.ply", scaled_vec_pc)
     if deb:
         draw_point_cloud(scaled_vec_pc)
 
     scaled_vec = scaled_vec[scaled_vec[:, 2] > 0.5, :]
-
     scaled_vec_pc = o3d.geometry.PointCloud()
     scaled_vec_pc.points = o3d.utility.Vector3dVector(scaled_vec)
-    # o3d.io.write_point_cloud("3D point clouds/DiMC_C_TEST_scaled_vec.ply", scaled_vec_pc)
 
     if deb:
         draw_point_cloud(scaled_vec_pc)
 
     scaled_vec = rotate_ndarray_3d(scaled_vec, 185, [1, 0, 0])
-
     scaled_vec_pc = o3d.geometry.PointCloud()
     scaled_vec_pc.points = o3d.utility.Vector3dVector(scaled_vec)
-    # o3d.io.write_point_cloud("3D point clouds/DiMC_C_TEST_scaled_vec.ply", scaled_vec_pc)
     if deb:
         draw_point_cloud(scaled_vec_pc)
 

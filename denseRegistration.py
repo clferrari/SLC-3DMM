@@ -1,11 +1,9 @@
 import scipy.io
-import numpy as np
 from scipy.spatial.distance import cdist
 import sys
 import _3DMM
 import Matrix_operations as mo
 import mat73
-import open3d as o3d
 import numpy.matlib as npm
 from utils import *
 
@@ -88,7 +86,7 @@ def fitting_3dMM(source, threshold, **kwargs):
     lambda_all = 1
 
     # Load 3DMM Components
-    slc = mat73.loadmat('data/SLC_300_1_0.1.mat')
+    slc = mat73.loadmat(kwargs['datapath'] + '/SLC_300_1_0.1.mat')
     components = slc.get('Components')
     weights = slc.get('Weights')
     aligned_models_data = None
@@ -96,7 +94,7 @@ def fitting_3dMM(source, threshold, **kwargs):
     Components_res = components_R.X_res
 
     # Load avgModel
-    avgM = mat73.loadmat('data/avgModel_bh_1779_NE.mat')
+    avgM = mat73.loadmat(kwargs['datapath'] + '/avgModel_bh_1779_NE.mat')
     avgModel = avgM.get('avgModel')
 
     # Zero mean
@@ -111,7 +109,7 @@ def fitting_3dMM(source, threshold, **kwargs):
     vertex = source.points
     vertex = np.asarray(vertex)
 
-    # calculate top and bottom point of avgModel and newModel for scale. TODO Check this part
+    # calculate top and bottom point of avgModel and newModel for scale.
     avg_landmark_top_face_value = np.max(avgModel[:, 1])
     avg_landmark_bottom_face_value = np.min(avgModel[:, 1])
 
@@ -132,7 +130,7 @@ def fitting_3dMM(source, threshold, **kwargs):
     modGT = vertex - npm.repmat(baric, np.size(vertex, axis=0), 1)
 
     # Load Control Landmarks
-    frgcLm_buLips_gen = mat73.loadmat('data/landmarksFRGC_CVPR20_ver2.mat')
+    frgcLm_buLips_gen = mat73.loadmat(kwargs['datapath'] + '/landmarksFRGC_CVPR20_ver2.mat')
     frgcLm_buLips = frgcLm_buLips_gen.get('frgcLm_buLips')
     # Make 0-based indexing
     lm3dmmGT = frgcLm_buLips - 1
@@ -158,12 +156,12 @@ def fitting_3dMM(source, threshold, **kwargs):
     Ticp = transf_vec[0:3, 3]
 
     modGT = np.transpose(np.matmul(Ricp, modGT.T) + np.transpose(npm.repmat(Ticp, np.size(modGT, axis=0), 1)))
-
+    mGT1 = o3d.geometry.PointCloud()
+    mGT1.points = o3d.utility.Vector3dVector(modGT)
     if kwargs['debug']:
-        mGT1 = o3d.geometry.PointCloud()
-        mGT1.points = o3d.utility.Vector3dVector(modGT)
         draw_point_cloud_with_landmarks(mGT1, dShape, 'Post ICP registration')
 
+    o3d.io.write_point_cloud(kwargs['savepath'] + "/modGT.ply", mGT1)
     # Initial Association
     [modPerm, err, minidx, missed] = bidirectionalAssociation(modGT, defShape)
 
@@ -201,27 +199,11 @@ def fitting_3dMM(source, threshold, **kwargs):
     dShape = o3d.geometry.PointCloud()
     dShape.points = o3d.utility.Vector3dVector(defShape)
 
+    o3d.io.write_point_cloud(kwargs['savepath'] + "/defShape.ply", dShape)
+
     if kwargs['debug']:
         print('Landmarks in red and defShape in blue')
         draw_point_cloud_with_landmarks(dShape, landmarksdShape, 'Figure')
-
-    x = defShape[:, 0]
-    y = defShape[:, 1]
-    z = defShape[:, 2]
-
-    scipy.io.savemat('dShape.mat', dict(x=x, y=y, z=z))
-
-    # mGT2 = o3d.geometry.PointCloud()
-    # mGT2.points = o3d.utility.Vector3dVector(modGT)
-    #
-    # print('modGT in blue')
-    # draw_point_cloud(mGT2)
-
-    x1 = modGT[:, 0]
-    y1 = modGT[:, 1]
-    z1 = modGT[:, 2]
-
-    scipy.io.savemat('mGT.mat', dict(x=x1, y=y1, z=z1))
 
     # Registered GT model building ..................
     print('Start Dense Registration routine')
@@ -231,7 +213,7 @@ def fitting_3dMM(source, threshold, **kwargs):
 
     mFinal = o3d.geometry.PointCloud()
     mFinal.points = o3d.utility.Vector3dVector(modFinal)
-    o3d.io.write_point_cloud("3D point clouds function/mod_Final.ply", mFinal)
+    o3d.io.write_point_cloud(kwargs['savepath'] + "/mod_Final.ply", mFinal)
     if kwargs['debug']:
         print('landmarks in red and modFinal in blue')
         draw_point_cloud_with_landmarks(mFinal, landmarksdShape, 'Figure')
