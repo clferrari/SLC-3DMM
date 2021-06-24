@@ -16,6 +16,10 @@ This repository contains the official Python implementation of SLC and Non-Rigid
 
 ## Usage
 
+### Requirements
+
+The code is tested with Python3.8. Additional packages required are Open3D, pywavefront, NumPy, SciPy.
+
 ### Learning SLC-3DMM
 
 To build the SLC-3DMM, we apply the method described in `Mairal, Julien, et al. "Online dictionary learning for sparse coding." ICML 2009`. Python and MATLAB packages are available at `http://spams-devel.gforge.inria.fr/downloads.html`.
@@ -28,11 +32,13 @@ In SLC folder, you can find mex files for the MATLAB implementation that we used
 
 ### Data Pre-processing
 
-To pre-process the data i.e. crop the face region, use preprocess_data.py. It works both for depth images e.g. Kinect and point-clouds. 
+To pre-process the data i.e. crop the face region, use `preprocess_data.py`. It works both for depth images e.g. Kinect and point-clouds. 
 
 ### Dense Registration Algorithm
 
-To run the dense registration algorithm, run the fitting3DMM method in denseRegistration.py. 
+To run the dense registration algorithm, run the fitting3DMM method in `denseRegistration.py`. 
+
+For a demonstration, run `mainProgram.py` 
 
 ### HLS-3DMM
 
