@@ -46,4 +46,8 @@ If you find our work useful, cite us!
 
 The software is provided under the MIT license (see LICENSE).
 
+### Contacts
+
+For any inquiry, feel free to drop an email to ferrari.claudio88@gmail.com
+
 
