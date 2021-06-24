@@ -10,11 +10,21 @@ This repository contains the official Python implementation of SLC and Non-Rigid
 
 [[ArXiv](https://arxiv.org/abs/2006.03840)]
 
+## Changelog
+
+6/24/21 - Repository created.
+
 ## Usage
 
 ### Learning SLC-3DMM
 
 To build the SLC-3DMM, we apply the method described in `Mairal, Julien, et al. "Online dictionary learning for sparse coding." ICML 2009`. Python and MATLAB packages are available at `http://spams-devel.gforge.inria.fr/downloads.html`.
+
+In SLC folder, you can find mex files for the MATLAB implementation that we used. To learn the SLC components, you need to run `nmf_3dmm` MATLAB function.
+
+`[Weights, Components] = nmf_3dmm(data,paramDL, paramLasso)`
+
+`data` contains the training matrix of faces (same topology). The matrix needs to be in the form N x 3m where N is the number of training scans, and 3m are the linearized (x,y,z) coordinates of the vertices.
 
 ### Data Pre-processing
 
@@ -23,6 +33,10 @@ To pre-process the data i.e. crop the face region, use preprocess_data.py. It wo
 ### Dense Registration Algorithm
 
 To run the dense registration algorithm, run the fitting3DMM method in denseRegistration.py. 
+
+### HLS-3DMM
+
+We will also (SOON) release the PCA components learned on the 9,927 fully registered faces obtained with our method. Stay tuned...
 
 ### Citation
 
