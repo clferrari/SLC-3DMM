@@ -10,9 +10,11 @@ This repository contains the official Python implementation of SLC and Non-Rigid
 
 [[ArXiv](https://arxiv.org/abs/2006.03840)]
 
+## Usage
+
 ### Learning SLC-3DMM
 
-To be updated.
+To build the SLC-3DMM, we apply the method described in `Mairal, Julien, et al. "Online dictionary learning for sparse coding." ICML 2009`. Python and MATLAB packages are available at `http://spams-devel.gforge.inria.fr/downloads.html`.
 
 ### Data Pre-processing
 
@@ -21,3 +23,13 @@ To pre-process the data i.e. crop the face region, use preprocess_data.py. It wo
 ### Dense Registration Algorithm
 
 To run the dense registration algorithm, run the fitting3DMM method in denseRegistration.py. 
+
+### Citation
+
+If you find our work useful, cite us!
+
+### License
+
+The software is provided under the MIT license (see LICENSE).
+
+
