@@ -13,6 +13,7 @@ This repository contains the official Python implementation of SLC and Non-Rigid
 ## Changelog
 
 06/24/21 - Repository created.
+
 06/29/21 - Added HLS PCA components.
 
 ## Usage
