@@ -12,7 +12,9 @@ This repository contains the official Python implementation of SLC and Non-Rigid
 
 ## Changelog
 
-6/24/21 - Repository created.
+06/24/21 - Repository created.
+
+06/29/21 - Added HLS PCA components.
 
 ## Usage
 
@@ -42,11 +44,25 @@ For a demonstration, run `mainProgram.py`
 
 ### HLS-3DMM
 
-We will also (SOON) release the PCA components learned on the 9,927 fully registered faces obtained with our method. Stay tuned...
+We also release the PCA components (Matlab .mat file) learned on the 9,927 fully registered faces obtained with our method. They can be found at this link [[Components](https://drive.google.com/file/d/1CUeBHhtsRluw27tvhbmaiyR6n03bREmX/view?usp=sharing)], [[AverageModel](https://drive.google.com/file/d/1deJ-JE1AFWwTs84tIyidBzv7rk46zL-Y/view?usp=sharing)].
+
+The average model includes the triangulation and the indices of the 68 landmarks. To deform the average model using the components, you can use the function `deform_3D_shape_fast` in `_3DMM.py`.
 
 ### Citation
 
 If you find our work useful, cite us!
+
+```
+@ARTICLE{9462361,
+  author={Ferrari, Claudio and Berretti, Stefano and Pala, Pietro and Del BIMBO, Alberto},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+  title={A Sparse and Locally Coherent Morphable Face Model for Dense Semantic Correspondence Across Heterogeneous 3D Faces}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={1-1},
+  doi={10.1109/TPAMI.2021.3090942}}
+```
 
 ### License
 
