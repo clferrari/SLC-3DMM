@@ -50,7 +50,7 @@ If you find our work useful, cite us!
 
 ### License
 
-The software is provided under the MIT license (see LICENSE).
+The software is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.(see LICENSE).
 
 ### Contacts
 
